@@ -15,7 +15,9 @@ class ActivityChecker(object):
         for company in company_dict:
             rss_feeds = company_dict[company]
             last_active_date = self.findLastActivity(rss_feeds)
-            if(last_active_date < date_since):
+            if(last_active_date == None):
+                print("XML parsing failed")
+            elif(last_active_date < date_since):
                 inactive_companies.append(company)
         
         return inactive_companies
@@ -35,4 +37,4 @@ test_data = {
     "bill_simmons": ["https://rss.art19.com/the-bill-simmons-podcast"]
 }
 checker = ActivityChecker()
-inactive = checker.activitySince(0, test_data)
+inactive = checker.activitySince(10, test_data)
