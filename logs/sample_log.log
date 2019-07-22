@@ -1,0 +1,6 @@
+ERROR: No dates found at RSS Feed <http://feeds.bbci.o.uk/news/world/us_and_canada/rss.xml> for company bbc
+ERROR: XML parsing for bbc failed
+NOTE: Max date for bill_maher: 2019-07-01 20:25:04
+NOTE: Max date for bill_simmons: 2019-07-18 20:47:57
+NOTE: List of Inactive Companies:
+NOTE: ['bill_maher']
