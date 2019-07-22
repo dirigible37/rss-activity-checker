@@ -1,5 +1,5 @@
-# Metabolon Tech Assessment - Winslow Mohr
-Tech assessment for Metabolon Software Development Engineer
+# RSS Feed Activity Checker - Winslow Mohr
+Tool to check whether an RSS feed has had activity in the past X days
 
 # Requirements
 **Given:**
