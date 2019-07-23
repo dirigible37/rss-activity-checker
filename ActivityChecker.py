@@ -12,9 +12,12 @@ class ActivityChecker(object):
         self.logger = _logger
     
     def runActivityChecker(self, input_data, num_days=10):
+        inactiveCompanies = None
+        #If it's provided a dictionary, simply pass it on
         if isinstance(input_data,dict):
             self.logger.logNote("Dictionary data given as input")
-            self.activitySince(num_days, input_data)
+            inactiveCompanies = self.activitySince(num_days, input_data)
+        #If it's provided a string, assume it's a filename and attempt to read it
         elif isinstance(input_data,str): 
             self.logger.logNote("File data given as input")   
             try:          
@@ -22,9 +25,9 @@ class ActivityChecker(object):
                     data = json.load(json_file)
                     _company_dict = data['company_dict']
                     _num_days = data['num_days']
-                    self.activitySince(int(_num_days), _company_dict)
+                    inactiveCompanies = self.activitySince(int(_num_days), _company_dict)
             except FileNotFoundError:
-                self.logger.logFatalError("Input file not found")
+                self.logger.logFatalError("Input file '"+str(input_data)+"' not found")
                 return
             except json.decoder.JSONDecodeError:
                 self.logger.logFatalError("Input JSON not formatted correctly")
@@ -35,11 +38,13 @@ class ActivityChecker(object):
         else:
             self.logger.logFatalError("Unrecognized input provided")
             return
+
+        return inactiveCompanies
             
     def activitySince(self, num_days, company_dict): 
         #Number of days cannot be less than 0
         if(num_days < 0):
-            self.logger.logFatalError("Number of days given must be greater than or equal to 0")
+            self.logger.logFatalError("Number of days given ("+str(num_days)+") must be greater than or equal to 0")
             return None
         
         #Number of days cannot go over days since epoch
@@ -101,16 +106,14 @@ class ActivityChecker(object):
             
             #Loop through all instances of "pubDate" in given XML
             for pubdate in soup.find_all('pubDate'):
+                #Strip datetime out
+                _pubdate = pubdate.text[:pubdate.text.rindex(' ')]
                 try:
-                    #Date format: Fri, 25 Sep 2015 16:27:20 -0000
-                    date =  datetime.strptime(pubdate.text, '%a, %d %b %Y %H:%M:%S %z')
+                    #Date format: Fri, 25 Sep 2015 16:27:20
+                    date =  datetime.strptime(_pubdate, '%a, %d %b %Y %H:%M:%S')
                 except ValueError:
-                    try: 
-                        #Date Format: Tue, 18 Jun 2019 00:54:40 GMT
-                        date =  datetime.strptime(pubdate.text, '%a, %d %b %Y %H:%M:%S %Z')
-                    except ValueError:
-                        self.logger.logError("Date value in RSS Feed <"+str(feed)+"> for company "+str(company)+" in unexpected format: " + str(pubdate.text))
-                        continue
+                    self.logger.logError("Date value in RSS Feed <"+str(feed)+"> for company "+str(company)+" in unexpected format: " + str(_pubdate))
+                    continue
                 
                 #Remove timezene info and append to list of dates
                 date = date.replace(tzinfo=None)

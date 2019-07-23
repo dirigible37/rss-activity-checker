@@ -3,6 +3,11 @@
 	"company_dict": {
 		"bbc": ["http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"],
 		"bill_maher": ["http://billmaher.hbo.libsynpro.com/rss"],
-		"bill_simmons": ["https://rss.art19.com/the-bill-simmons-podcast"]
+		"bill_simmons": ["https://rss.art19.com/the-bill-simmons-podcast"],
+		"espn": ["https://www.espn.com/espn/rss/news"],
+		"espnfc": ["http://www.espnfc.com/english-premier-league/23/rss"],
+		"fox": ["https://www.foxnews.com/about/rss/"],
+		"hacker news": ["https://hnrss.org/newest", "https://hnrss.org/frontpage", "https://hnrss.org/jobs"],
+		"Jim Rome": ["https://www.omnycontent.com/d/playlist/4b5f9d6d-9214-48cb-8455-a73200038129/a7c446d6-29da-43ba-bbe5-a7da00ecda4a/a65603a6-cf22-4150-91c1-a7da00ed5220/podcast.rss"]
 	}
 }

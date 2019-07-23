@@ -4,7 +4,7 @@ from Logger import Logger
 from Tester import Tester
 
 if __name__ == "__main__":
-  logger = Logger('stdout')
+  logger = Logger('file')
   checker = ActivityChecker(logger)
 
   test_data = {

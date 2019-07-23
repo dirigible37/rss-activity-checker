@@ -1,4 +1,4 @@
-from ActivityChecker import  ActivityChecker
+from ActivityChecker import ActivityChecker
 
 class Tester(object):
   def __init__(self, _activity_checker):
