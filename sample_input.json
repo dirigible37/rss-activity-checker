@@ -1,0 +1,8 @@
+{
+	"num_days": "10",
+	"company_dict": {
+		"bbc": ["http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"],
+		"bill_maher": ["http://billmaher.hbo.libsynpro.com/rss"],
+		"bill_simmons": ["https://rss.art19.com/the-bill-simmons-podcast"]
+	}
+}

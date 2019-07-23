@@ -40,3 +40,17 @@ Tool to check whether an RSS feed has had activity in the past X days
       - Multiple RSS feeds
       - Valid URL
       - Invalid URL
+
+# Installation and Run Instructions
+## Installation
+- Dependencies:
+  - Python 3.4+
+  - [Pip](https://pip.pypa.io/en/stable/installing/)
+- Install required python packages by running:
+  - (sudo if necessary) pip install requirements.txt
+
+## Run Instructions
+- To run a sample test, run "python Main.py"
+- To run test suite, run "python Main.py test"
+- To run with a custom json file (see sample_input.json for format), run "python Main.py <input_json_file>"
+- To run with a custom dictionary, please open Main.py and edit test_data and test_num_days on lines 10 and 15, then run "python Main.py dictionary"

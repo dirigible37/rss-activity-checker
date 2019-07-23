@@ -4,6 +4,15 @@ class Tester(object):
   def __init__(self, _activity_checker):
     self.ac = _activity_checker
   
+  def runAllTests(self):
+    self.checkInvalidDayNums()
+    self.checkEmptyInput()
+    self.checkEmptyValues()
+    self.checkOneValuePerKey()
+    self.checkMultiValuePerKey()
+    self.checkMultipleKeys()
+    self.checkInvalidURL()
+  
   def checkInvalidDayNums(self): 
     test_data = {
         "bbc": ["http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"],

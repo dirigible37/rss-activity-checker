@@ -3,6 +3,7 @@ import requests
 import sys
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup as bs
+import json
 
 from Logger import Logger 
 
@@ -10,6 +11,31 @@ class ActivityChecker(object):
     def __init__(self, _logger):
         self.logger = _logger
     
+    def runActivityChecker(self, input_data, num_days=10):
+        if isinstance(input_data,dict):
+            self.logger.logNote("Dictionary data given as input")
+            self.activitySince(num_days, input_data)
+        elif isinstance(input_data,str): 
+            self.logger.logNote("File data given as input")   
+            try:          
+                with open(input_data) as json_file:
+                    data = json.load(json_file)
+                    _company_dict = data['company_dict']
+                    _num_days = data['num_days']
+                    self.activitySince(int(_num_days), _company_dict)
+            except FileNotFoundError:
+                self.logger.logFatalError("Input file not found")
+                return
+            except json.decoder.JSONDecodeError:
+                self.logger.logFatalError("Input JSON not formatted correctly")
+                return
+            except KeyError as key:
+                self.logger.logFatalError("Key " + str(key) + " not found in input JSON file")
+                return
+        else:
+            self.logger.logFatalError("Unrecognized input provided")
+            return
+            
     def activitySince(self, num_days, company_dict): 
         #Number of days cannot be less than 0
         if(num_days < 0):
@@ -77,7 +103,6 @@ class ActivityChecker(object):
             for pubdate in soup.find_all('pubDate'):
                 try:
                     #Date format: Fri, 25 Sep 2015 16:27:20 -0000
-                    print(pubdate.text)
                     date =  datetime.strptime(pubdate.text, '%a, %d %b %Y %H:%M:%S %z')
                 except ValueError:
                     try: 
